@@ -6,20 +6,25 @@ const SECRET_FILE = "/usr/etc/hmt/credentials"
 const SECRET_KEY  = "/usr/etc/hmt/.secret"
 
 func main() {
-    readCredentials(SECRET_FILE)
-    // action 1: read credentials
-    //  - decrypt credentials - asks for user input (pass) to decrypt
-    //  - parse and get required credentials
-    //  - set on the clipboard
-
-    // action 2: write credentials
-    // - enrypt credentials
-    fmt.Println("hello world")
+    var x = filterNegativeElements([]int{3, -1, 1, 14}, []int{}, 0)
+    fmt.Println(x)
 }
 
-func readCredentials(file string) {
-    // file content should be ciphered, so need to decrypt it first.
+func filterNegativeElements(numbers [] int, positiveNumbers []int, cursor int) []int {
+    if(cursor == len(numbers)) { return positiveNumbers }
+    var number = numbers[cursor]
+    if(number > 0) {
+        positiveNumbers = append(positiveNumbers, number)
+    }
+    return filterNegativeElements(numbers, positiveNumbers, cursor + 1)
 }
 
-func getSumOfSquares(numbers []int, sum int) {
+func getSumOfSquares(numbers []int, sum int) int {
+    var head = numbers[0]
+    sum      = sum + head * head
+    if(len(numbers) == 1) {
+        return sum
+    }
+    var tail = numbers[1:]
+    return head + getSumOfSquares(tail, sum)
 }
