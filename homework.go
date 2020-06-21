@@ -14,13 +14,29 @@ func main() {
     getSumOfSquares(testCaseCount, arrayStackCount)
 }
 
-func getUserNumericalInput() int {
-    var count = strings.TrimSpace(getUserInput())
+func getUserNumberArrayInput() []int {
+    var numbers = strings.Fields(strings.TrimSpace(getUserInput()))
+    fmt.Printf("> %s\n" ,numbers)
+    return toIntList(numbers, []int{}, 0)
+}
+
+func toIntList(ss []string, xs []int, cursor int) []int {
+    if(cursor == len(ss)) { return xs }
+    number := ss[cursor]
+    xs = append(xs, toInt(number))
+    return toIntList(ss, xs, cursor + 1) 
+}
+
+func toInt(x string) int {
+    var count = strings.TrimSpace(x)
     countInt, err := strconv.Atoi(count)
     if err != nil {
     }
-    fmt.Printf("> %d\n" ,countInt)
     return countInt
+}
+
+func getUserNumericalInput() int {
+    return toInt(getUserInput())
 }
 
 func getUserInput() string {
@@ -38,11 +54,14 @@ func getPositiveNumbers(numbers [] int, positiveNumbers []int, cursor int) []int
     return getPositiveNumbers(numbers, positiveNumbers, cursor + 1)
 }
 
-func getSumOfSquares(testCaseCount int, arrayStackCount int) int {
-    var positiveNumbers = getPositiveNumbers([]int{9, 6, -53, 32, 16}, []int{}, 0)
+func getSumOfSquares(testCaseCount int, arrayStackCount int) {
+    if(testCaseCount == 0) {
+        return
+    }
+    var positiveNumbers = getPositiveNumbers(getUserNumberArrayInput(), []int{}, 0)
     var sumOfSquares    = _getSumOfSquares(positiveNumbers, 0, arrayStackCount)
     fmt.Println(sumOfSquares)
-    return sumOfSquares
+    getSumOfSquares(testCaseCount - 1, arrayStackCount)
 }
 
 func _getSumOfSquares(numbers []int, sum int, arrayStackCount int) int {
