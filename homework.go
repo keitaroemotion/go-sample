@@ -9,14 +9,21 @@ import (
 )
 
 func main() {
-    testCaseCount   := getUserNumericalInput()
+    testCaseCount := getUserNumericalInput()
+    getTestArgumentSet(testCaseCount)
+}
+
+func getTestArgumentSet(testCaseCount int) {
+    if(testCaseCount == 0) { return }
     arrayStackCount := getUserNumericalInput()
-    getSumOfSquares(testCaseCount, arrayStackCount)
+    positiveNumbers := getPositiveNumbers(getUserNumberArrayInput(), []int{}, 0)
+    sumOfSquares    := getSumOfSquares(positiveNumbers[0:arrayStackCount-1], 0)
+    fmt.Printf("%d\n", sumOfSquares)
+    getTestArgumentSet(testCaseCount - 1)
 }
 
 func getUserNumberArrayInput() []int {
     var numbers = strings.Fields(strings.TrimSpace(getUserInput()))
-    fmt.Printf("> %s\n" ,numbers)
     return toIntList(numbers, []int{}, 0)
 }
 
@@ -54,21 +61,11 @@ func getPositiveNumbers(numbers [] int, positiveNumbers []int, cursor int) []int
     return getPositiveNumbers(numbers, positiveNumbers, cursor + 1)
 }
 
-func getSumOfSquares(testCaseCount int, arrayStackCount int) {
-    if(testCaseCount == 0) {
-        return
-    }
-    var positiveNumbers = getPositiveNumbers(getUserNumberArrayInput(), []int{}, 0)
-    var sumOfSquares    = _getSumOfSquares(positiveNumbers, 0, arrayStackCount)
-    fmt.Println(sumOfSquares)
-    getSumOfSquares(testCaseCount - 1, arrayStackCount)
-}
-
-func _getSumOfSquares(numbers []int, sum int, arrayStackCount int) int {
-    if(len(numbers) == 0 || arrayStackCount == 0) {
+func getSumOfSquares(numbers []int, sum int) int {
+    if(len(numbers) == 0) {
         return sum
     }
     var head = numbers[0]
     var tail = numbers[1:]
-    return _getSumOfSquares(tail, sum + (head * head), arrayStackCount - 1)
+    return getSumOfSquares(tail, sum + (head * head))
 }
