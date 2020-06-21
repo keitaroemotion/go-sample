@@ -5,10 +5,8 @@ import (
     "fmt"
     "os"
     "strconv"
+    "strings"
 )
-
-const SECRET_FILE = "/usr/etc/hmt/credentials"
-const SECRET_KEY  = "/usr/etc/hmt/.secret"
 
 func main() {
     testCaseCount   := getUserNumericalInput()
@@ -17,10 +15,11 @@ func main() {
 }
 
 func getUserNumericalInput() int {
-    var count = getUserInput()
+    var count = strings.TrimSpace(getUserInput())
     countInt, err := strconv.Atoi(count)
     if err != nil {
     }
+    fmt.Printf("> %d\n" ,countInt)
     return countInt
 }
 
@@ -41,16 +40,16 @@ func getPositiveNumbers(numbers [] int, positiveNumbers []int, cursor int) []int
 
 func getSumOfSquares(testCaseCount int, arrayStackCount int) int {
     var positiveNumbers = getPositiveNumbers([]int{9, 6, -53, 32, 16}, []int{}, 0)
-    var sumOfSquares    = _getSumOfSquares(positiveNumbers, 0)
+    var sumOfSquares    = _getSumOfSquares(positiveNumbers, 0, arrayStackCount)
     fmt.Println(sumOfSquares)
     return sumOfSquares
 }
 
-func _getSumOfSquares(numbers []int, sum int) int {
-    if(len(numbers) == 0) {
+func _getSumOfSquares(numbers []int, sum int, arrayStackCount int) int {
+    if(len(numbers) == 0 || arrayStackCount == 0) {
         return sum
     }
     var head = numbers[0]
     var tail = numbers[1:]
-    return _getSumOfSquares(tail, sum + (head * head))
+    return _getSumOfSquares(tail, sum + (head * head), arrayStackCount - 1)
 }
