@@ -23,7 +23,7 @@ func getTestArgumentSet(testCaseCount int) {
 }
 
 func getUserNumberArrayInput() []int {
-    var numbers = strings.Fields(strings.TrimSpace(getUserInput()))
+    numbers := strings.Fields(strings.TrimSpace(getUserInput()))
     return toIntList(numbers, []int{}, 0)
 }
 
@@ -35,7 +35,7 @@ func toIntList(ss []string, xs []int, cursor int) []int {
 }
 
 func toInt(x string) int {
-    var count = strings.TrimSpace(x)
+    count         := strings.TrimSpace(x)
     countInt, err := strconv.Atoi(count)
     if err != nil {
     }
@@ -54,7 +54,7 @@ func getUserInput() string {
 
 func getPositiveNumbers(numbers [] int, positiveNumbers []int, cursor int) []int {
     if(cursor == len(numbers)) { return positiveNumbers }
-    var number = numbers[cursor]
+    number := numbers[cursor]
     if(number > 0) {
         positiveNumbers = append(positiveNumbers, number)
     }
@@ -65,7 +65,7 @@ func getSumOfSquares(numbers []int, sum int) int {
     if(len(numbers) == 0) {
         return sum
     }
-    var head = numbers[0]
-    var tail = numbers[1:]
+    head := numbers[0]
+    tail := numbers[1:]
     return getSumOfSquares(tail, sum + (head * head))
 }
