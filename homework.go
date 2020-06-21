@@ -1,14 +1,33 @@
 package main
 
-import "fmt"
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strconv"
+)
 
 const SECRET_FILE = "/usr/etc/hmt/credentials"
 const SECRET_KEY  = "/usr/etc/hmt/.secret"
 
 func main() {
-    var positiveNumbers = getPositiveNumbers([]int{3, -1, 1, 14}, []int{}, 0)
-    var sumOfSquares    = getSumOfSquares(positiveNumbers, 0)
-    fmt.Println(sumOfSquares)
+    testCaseCount   := getUserNumericalInput()
+    arrayStackCount := getUserNumericalInput()
+    getSumOfSquares(testCaseCount, arrayStackCount)
+}
+
+func getUserNumericalInput() int {
+    var count = getUserInput()
+    countInt, err := strconv.Atoi(count)
+    if err != nil {
+    }
+    return countInt
+}
+
+func getUserInput() string {
+    reader  := bufio.NewReader(os.Stdin)
+    text, _ := reader.ReadString('\n')
+    return text
 }
 
 func getPositiveNumbers(numbers [] int, positiveNumbers []int, cursor int) []int {
@@ -20,11 +39,18 @@ func getPositiveNumbers(numbers [] int, positiveNumbers []int, cursor int) []int
     return getPositiveNumbers(numbers, positiveNumbers, cursor + 1)
 }
 
-func getSumOfSquares(numbers []int, sum int) int {
+func getSumOfSquares(testCaseCount int, arrayStackCount int) int {
+    var positiveNumbers = getPositiveNumbers([]int{9, 6, -53, 32, 16}, []int{}, 0)
+    var sumOfSquares    = _getSumOfSquares(positiveNumbers, 0)
+    fmt.Println(sumOfSquares)
+    return sumOfSquares
+}
+
+func _getSumOfSquares(numbers []int, sum int) int {
     if(len(numbers) == 0) {
         return sum
     }
     var head = numbers[0]
     var tail = numbers[1:]
-    return getSumOfSquares(tail, sum + (head * head))
+    return _getSumOfSquares(tail, sum + (head * head))
 }
