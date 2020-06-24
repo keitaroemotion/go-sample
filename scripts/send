@@ -1,0 +1,5 @@
+cd java 
+javac totp.java
+set -x
+token=$(java TOTP | sed -n 1p)
+curl -X POST https://api.challenge.hennge.com/challenges/003 -u tobasojyo@gmail.com:${token} -H "Content-Type: application/json" -d "{ \"github_url\": \"https://gist.github.com/keitaroemotion/e2268cc92df9e0b6be5fad4a3eaac31a\", \"contact_email\": \"tobasojyo@gmail.com\" }"

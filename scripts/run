@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+cd java
+javac totp.java
 
 set -e
 go build -o src/homework homework.go;
